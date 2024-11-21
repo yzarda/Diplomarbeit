@@ -5,16 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ki-Konsole</title>
     <link rel="stylesheet" href="style.css"> 
+    <script src="script.js"></script>
+
 </head>
 <body>
-    <h1>Willkommen zur KI-Konsole</h1>
+    <div class="container">
 
-    <div class="console-container">
-        <div class="console-output"></div>
-            <input type="text" class="console-input" placeholder="Gib deinen Befehl ein...">
-            <button onclick="">test</button>
-    </div>
-
-    <script src="script.js"></script>
+        <!-- /<h1>Willkommen zur KI-Konsole</h1> -->
+        
+        <div class="header">
+            <img src="/images/HTL_Logo_transparent.png" alt="HTL Logo" class="logo">
+            <div class="signin">Sign in</div>
+            <img src="/images/Balken 3 Farben.jpg" alt="Farbbalken" class="Balken_3_Farben">
+        </div>
+        
+        <main class="console-container">
+            <div class="console-output">Ausgabe...</div>
+            <div class="console-history">Verlauf...</div>                    
+        </main>
+        
+        <footer class="footer">
+            <input type="text" class="console-input" placeholder="Nachricht schreiben...">
+            <button onclick="">Senden...</button>
+        </footer>
+    </div> 
 </body>
 </html>
