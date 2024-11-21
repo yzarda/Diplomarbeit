@@ -11,10 +11,11 @@ body{
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color:#f4f4f9;
+    background-color:white;
 }
 .container {
-    width: 900px;
+    height: 100%;
+    width: 100%;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -30,18 +31,14 @@ body{
     align-items: center;
     padding: 20px;
     background-color: #fff;
-    border-bottom: 2px solid #ddd;
+    border-bottom: 2px solid black;
+    height: 20%;
 }
 .logo {
-    position: absolute;
-    width: 171px;
-    height: 201px;
-    left: 28px;
-    top: 32px;
+    height: 80%;
 }
 
 .signin {
-    position: absolute;
     width: 160px;
     height: 59px;
     left: 832px;
@@ -50,58 +47,57 @@ body{
 }
 
 .Balken_3_Farben {
-    position: absolute;
     width: 435px;
     height: 49px;
-    left: 1007px;
-    top: 0px;
+    left: 100%;
 }
 
 /* Main */
+.console-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background-color: white;
+}
 
- .console-output {
-    background-color:burlywood;
-    position: absolute;
-    width: 673px;
-    height: 676px;
-    left: 346px;
-    top: 174px;
-
+.console-output, .console-history {
+    background-color: white;
+    border-radius: 10px;
     filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.5));
 }
 
+.console-output {
+    width: 673px;
+    height: 676px;
+}
+
 .console-history {
-    background-color:black;
-    position: absolute;
     width: 305px;
     height: 676px;
-    left: 1111px;
-    top: 174px;
-
-    filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.5));
 }
 
 /* Footer */
 
 .footer {
-    position: absolute;
-    width: 618.15px;
-    height: 39.73px;
-    left: 374px;
-    top: 903px;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    gap: 10px; 
+    margin-top: 0px; 
 }
 
-.console-input{
-    width: calc(100%-70px);
-    padding: 20px;
-    margin-right: 5px;
-    border-radius: 4px;
-    border-color: aqua;
+.console-input {
+    width: 500px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid aqua;
 }
 
 button {
     padding: 10px 15px;
-    border-radius: 4px;
+    border-radius: 5px;
     border: none;
     background-color: #555;
     color: #fff;
