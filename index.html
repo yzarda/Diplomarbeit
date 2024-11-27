@@ -7,13 +7,31 @@
     <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
-    <h1>Willkommen zur KI-Konsole</h1>
+    <!-- Header mit Logo und Sign-in -->
+    <header>
+        <img src="htl-logo.png" alt="HTL Dornbirn Logo" class="logo">
+        <a href="#" class="sign-in">Sign in</a>
+    </header>
 
-    <div class="console-container">
-        <div class="console-output"></div>
-            <input type="text" class="console-input" placeholder="Gib deinen Befehl ein...">
-            <button onclick="">Ausführen</button>
-    </div>
+    <!-- Hauptcontainer mit Ausgabe und Verlauf -->
+    <main class="container">
+        <!-- Große Ausgabe in der Mitte -->
+        <div class="output-area">
+            <div class="console-output"></div>
+        </div>
+
+        <!-- Verlauf rechts -->
+        <div class="history-area">
+            <h3>Verlauf...</h3>
+            <ul class="history-list"></ul>
+        </div>
+    </main>
+
+    <!-- Eingabefeld unten -->
+    <footer>
+        <input type="text" class="console-input" placeholder="Sende eine Nachricht...">
+        <button>Ausführen</button>
+    </footer>
 
     <script src="script.js"></script>
 </body>
