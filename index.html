@@ -6,58 +6,41 @@
     <title>Ki-Konsole</title>
     <link rel="stylesheet" href="style.css"> 
     <script src="script.js"></script>
-
 </head>
 <body>
-<<<<<<< HEAD
-    <!-- Header mit Logo und Sign-in -->
-    <header>
-        <img src="htl-logo.png" alt="HTL Dornbirn Logo" class="logo">
-        <a href="#" class="sign-in">Sign in</a>
-    </header>
-
-    <!-- Hauptcontainer mit Ausgabe und Verlauf -->
-    <main class="container">
-        <!-- Große Ausgabe in der Mitte -->
-        <div class="output-area">
-            <div class="console-output"></div>
-        </div>
-
-        <!-- Verlauf rechts -->
-        <div class="history-area">
-            <h3>Verlauf...</h3>
-            <ul class="history-list"></ul>
-        </div>
-    </main>
-
-    <!-- Eingabefeld unten -->
-    <footer>
-        <input type="text" class="console-input" placeholder="Sende eine Nachricht...">
-        <button>Ausführen</button>
-    </footer>
-
-    <script src="script.js"></script>
-=======
     <div class="container">
-
         <!-- /<h1>Willkommen zur KI-Konsole</h1> -->
         
         <div class="header">
-            <img src="/images/HTL_Logo_transparent.png" alt="HTL Logo" class="logo">
-            <div class="signin">Sign in</div>
-            <img src="/images/Balken 3 Farben.jpg" alt="Farbbalken" class="Balken_3_Farben">
+            <img src="images/HTL_Logo_transparent.png" alt="HTL Logo" class="logo">
+            <div class="signin" id="signinBtn">Sign in</div>
+            <img src="images/Balken 3 Farben.jpg" alt="Farbbalken" class="Balken_3_Farben">
         </div>
-        
-        <div class="console-container">
-            <div class="console-output">Ausgabe...</div>
-            <div class="console-history">Verlauf...</div>                    
+
+        <!-- Login Modal -->
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <input type="text" id="username" placeholder="Benutzername" required>
+                    <input type="password" id="password" placeholder="Passwort" required>
+                    <button type="submit">Anmelden</button>
+                </form>
+            </div>
         </div>
-        
-        <div class="footer">
-            <input type="text" class="console-input" placeholder="Nachricht schreiben...">
-            <button onclick="">Senden...</button>
+
+        <main class="console-container">
+            <div class="console-wrapper">
+                <div class="console-output" id="output">Ausgabe...</div>
+                <div class="console-history" id="history">Verlauf...</div>
+            </div>
+            <div class="footer">
+                <input type="text" class="console-input" id="userInput" placeholder="Nachricht schreiben...">
+                <button onclick="sendMessage()">Senden</button>
+            </div>
+        </main>
         </div>
     </div> 
->>>>>>> 0fe4acde24ed698f9b6213812cb0ccb75a8d4177
 </body>
 </html>
