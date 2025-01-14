@@ -69,19 +69,18 @@ function handleLogin(username) {
     localStorage.setItem('currentUser', username);
 }
 
-function sendMessage() {
+async function sendMessage() {
     const userInput = document.getElementById('userInput');
     const outputDiv = document.getElementById('output');
     const historyDiv = document.getElementById('history');
     
     const userMessage = userInput.value.trim();
     
-    if (userMessage === '') return; // Keine leeren Nachrichten
+    if (userMessage === '') return;
     
-    // Aktuelle Zeit für den Zeitstempel
     const timestamp = new Date().toLocaleTimeString();
     
-    // Nachricht zum Output hinzufügen
+    // Benutzernachricht anzeigen
     const outputMessage = document.createElement('div');
     outputMessage.innerHTML = `<p><strong>Du (${timestamp}):</strong> ${userMessage}</p>`;
     outputDiv.appendChild(outputMessage);
@@ -91,7 +90,7 @@ function sendMessage() {
     historyMessage.innerHTML = `<p><small>${timestamp}: ${userMessage}</small></p>`;
     historyDiv.appendChild(historyMessage);
     
-    // Nachricht im localStorage speichern
+    // Nachricht speichern
     saveToHistory({
         user: localStorage.getItem('currentUser') || 'Gast',
         message: userMessage,
@@ -101,24 +100,66 @@ function sendMessage() {
     // Input-Feld leeren
     userInput.value = '';
     
-    // Automatisches Scrollen zum neuesten Eintrag
+    // Automatisches Scrollen
     outputDiv.scrollTop = outputDiv.scrollHeight;
     historyDiv.scrollTop = historyDiv.scrollHeight;
     
-    // Hier später API-Aufruf einfügen
-    // apiCall(userMessage);
+    // API-Aufruf
+    try {
+        const response = await apiCall(userMessage);
+        handleBotResponse(response, timestamp);
+    } catch (error) {
+        console.error('API Error:', error);
+        handleBotResponse('Entschuldigung, es gab einen Fehler bei der Verarbeitung Ihrer Anfrage.', timestamp);
+    }
 }
 
-// Funktion für späteren API-Aufruf
 async function apiCall(message) {
-    // Hier kommt später der API-Code
-    // const response = await fetch(...);
-    // const data = await response.json();
-    // handleBotResponse(data);
+    try {
+        const response = await fetch('http://10.115.1.219:7860/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ message: message })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('API Call failed:', error);
+        throw error;
+    }
 }
 
-function handleBotResponse(response) {
-    // Hier kommt später die Verarbeitung der Bot-Antwort
+function handleBotResponse(response, timestamp) {
+    const outputDiv = document.getElementById('output');
+    const historyDiv = document.getElementById('history');
+    
+    // Bot-Antwort zum Output hinzufügen
+    const botMessage = document.createElement('div');
+    botMessage.innerHTML = `<p><strong>Bot (${timestamp}):</strong> ${response}</p>`;
+    outputDiv.appendChild(botMessage);
+    
+    // Bot-Antwort zum Verlauf hinzufügen
+    const historyMessage = document.createElement('div');
+    historyMessage.innerHTML = `<p><small>${timestamp} - Bot: ${response}</small></p>`;
+    historyDiv.appendChild(historyMessage);
+    
+    // Verlauf speichern
+    saveToHistory({
+        user: 'Bot',
+        message: response,
+        timestamp: timestamp
+    });
+    
+    // Automatisches Scrollen
+    outputDiv.scrollTop = outputDiv.scrollHeight;
+    historyDiv.scrollTop = historyDiv.scrollHeight;
 }
 
 // Verlauf speichern
