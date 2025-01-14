@@ -10,8 +10,7 @@ body {
 .container {
     position: relative;
     width: 100%;
-    max-width: 1400px;
-    height: 100vh;
+    height: 100%;
     padding: 20px;
     display: flex;
     flex-direction: column;
