@@ -103,28 +103,22 @@ async function apiCall(message) {
 
 function handleBotResponse(response, timestamp) {
     const outputDiv = document.getElementById('output');
-    const historyDiv = document.getElementById('history');
     
     // Bot-Antwort zum Output hinzufügen
     const botMessage = document.createElement('div');
     botMessage.innerHTML = `<p><strong>Bot (${timestamp}):</strong> ${response}</p>`;
     outputDiv.appendChild(botMessage);
     
-    // Bot-Antwort zum Verlauf hinzufügen
-    const historyMessage = document.createElement('div');
-    historyMessage.innerHTML = `<p><small>${timestamp} - Bot: ${response}</small></p>`;
-    historyDiv.appendChild(historyMessage);
-    
-    // Verlauf speichern
-    saveToHistory({
-        user: 'Bot',
-        message: response,
-        timestamp: timestamp
-    });
+    // Verlauf speichern (nicht mehr notwendig, da wir keine Bot-Antworten speichern wollen)
+//     saveToHistory({
+//         user: 'Bot',
+//         message: response,
+//         timestamp: timestamp
+//     });
     
     // Automatisches Scrollen
     outputDiv.scrollTop = outputDiv.scrollHeight;
-    historyDiv.scrollTop = historyDiv.scrollHeight;
+    // historyDiv.scrollTop = historyDiv.scrollHeight; // Diese Zeile kann entfernt werden, da wir den Verlauf nicht mehr aktualisieren
 }
 
 // Verlauf speichern
