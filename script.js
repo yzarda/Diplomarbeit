@@ -140,13 +140,33 @@ function loadHistory() {
     const outputDiv = document.getElementById('output');
     const historyDiv = document.getElementById('history');
     
+    historyDiv.innerHTML = ''; // Vorherigen Verlauf leeren
+
     history.forEach(item => {
-        const outputMessage = document.createElement('div');
-        outputMessage.innerHTML = `<p><strong>${item.user} (${item.timestamp}):</strong> ${item.message}</p>`;
-        outputDiv.appendChild(outputMessage);
-        
         const historyMessage = document.createElement('div');
         historyMessage.innerHTML = `<p><small>${item.timestamp} - ${item.user}: ${item.message}</small></p>`;
+        historyMessage.classList.add('history-item'); // Klasse hinzufügen für Styling
+        historyMessage.onclick = function() {
+            loadMessageToChat(item.message); // Funktion aufrufen, um die Nachricht zu laden
+        };
         historyDiv.appendChild(historyMessage);
     });
+}
+
+// Funktion zum Laden einer Nachricht in die Chatbox
+function loadMessageToChat(message) {
+    const userInput = document.getElementById('userInput');
+    userInput.value = message; // Nachricht in das Eingabefeld laden
+}
+
+function clearChat() {
+    const outputDiv = document.getElementById('output');
+    const historyDiv = document.getElementById('history');
+    
+    // Chatbox und Verlauf leeren
+    outputDiv.innerHTML = '';
+    historyDiv.innerHTML = '';
+    
+    // Verlauf im localStorage löschen
+    localStorage.removeItem('chatHistory');
 }

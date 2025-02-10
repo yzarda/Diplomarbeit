@@ -147,19 +147,47 @@ body {
 .console-input {
     width: 100%;
     max-width: 500px;
-    padding: 10px;
+    padding: 12px;
     border-radius: 5px;
-    border: 1px solid aqua;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.console-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+.console-input::placeholder {
+    color: #aaa;
+    font-style: italic;
 }
 
 button {
-    padding: 10px 15px;
+    padding: 12px;
     border-radius: 5px;
     border: none;
     background-color: #555;
-    color: #fff;
-    white-space: nowrap;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
 }
+
+
+button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0); 
+    
+}
+
 
 /* Media Queries für verschiedene Bildschirmgrößen */
 @media (max-width: 768px) {
@@ -260,4 +288,13 @@ button {
 /* Logged-in Status Styles */
 .signin.logged-in {
     background-color: #4CAF50;
+}
+
+.history-item {
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.history-item:hover {
+    background-color: #f0f0f0;
 }
