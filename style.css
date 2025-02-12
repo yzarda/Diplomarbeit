@@ -1,20 +1,17 @@
-#response {
-    margin-top: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
+/* CSS Reset */
+* {
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box;
 }
 
 body {
     display: flex;
-    justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    margin: 0;
     background-color: white;
 }
 
 .container {
-    position: relative;
     width: 100%;
     height: 100%;
     display: flex;
@@ -24,24 +21,22 @@ body {
 .header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
-    padding: 10px;
+    align-items: center;
     width: 100%;
     position: relative;
+    height: 15vh;
 }
 
 .logo {
     width: 100px;
     height: auto;
-    position: relative;
-    left: 0;
-    top: 0;
+    flex-shrink: 0;
 }
 
 .signin {
     position: absolute;
-    right: calc(30% + 40px);
-    top: 20px;
+    right: calc(30vh + 32px);
+    top: 25px;
     padding: 8px 16px;
     background-color: #555;
     color: white;
@@ -55,17 +50,16 @@ body {
 }
 
 .Balken_3_Farben {
-    width: 30%;
-    max-width: 435px;
+    width: 30vh;
     height: auto;
+    flex-shrink: 0;
     position: absolute;
-    right: 20px;
-    
+    top: 0;
+    right: 0;
+    max-width: 100%;
 }
 
 .console-container {
-    flex: 1;
-    display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 20px;
@@ -82,13 +76,10 @@ body {
 
 .console-output, .console-history {
     position: relative;
-    height: 600px;
+    height: 60vh;
     padding: 20px;
     overflow-y: auto;
     word-wrap: break-word;
-    background-color: #f5f5f5;
-    border: 2px solid #ddd;
-    border-radius: 10px;
 }
 
 .console-output {
@@ -192,7 +183,8 @@ button:active {
 /* Media Queries für verschiedene Bildschirmgrößen */
 @media (max-width: 768px) {
     .container {
-        padding: 10px;
+        padding: 0;
+        width: auto;
     }
 
     .console-wrapper {
@@ -211,12 +203,13 @@ button:active {
     }
 
     .Balken_3_Farben {
-        width: 25%;
-        right: 10px;
+        width: 200px;
+        right: 0;
     }
 
     .signin {
-        right: calc(25% + 30px);
+        right: calc(200px + 30px);
+        top: 5px;
         font-size: 0.9em;
         padding: 6px 12px;
     }
@@ -235,6 +228,29 @@ button:active {
 
     button {
         width: 80%;
+    }
+
+    .Balken_3_Farben {
+        width: 150px;
+        right: 0;
+    }
+
+    .signin {
+        right: 0%;
+        top: 40px;
+        font-size: 0.8em;
+        padding: 5px 15px;
+    }
+}
+
+/* Zusätzliche Media Queries für noch kleinere Bildschirme */
+@media (max-width: 320px) {
+    .console-input {
+        width: 90%;
+    }
+
+    .footer {
+        padding: 10px;
     }
 }
 
