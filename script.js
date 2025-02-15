@@ -68,14 +68,14 @@ async function sendMessage() {
     // Automatisches Scrollen
     outputDiv.scrollTop = outputDiv.scrollHeight;
     historyDiv.scrollTop = historyDiv.scrollHeight;
-    
-    // API-Aufruf
+
+    // API-Anruf und Bot-Antwort
     try {
         const response = await apiCall(userMessage);
         handleBotResponse(response, timestamp);
     } catch (error) {
         console.error('API Error:', error);
-        handleBotResponse('Entschuldigung, es gab einen Fehler bei der Verarbeitung Ihrer Anfrage.', timestamp);
+        handleBotResponse('Entschuldigung, ein Fehler ist aufgetreten.', timestamp);
     }
 }
 
@@ -83,84 +83,73 @@ async function apiCall(message) {
     try {
         const response = await fetch('http://10.115.1.219:7860/', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ message: message })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message })
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data;
+        if (!response.ok) throw new Error(`HTTP Fehler: ${response.status}`);
+        return await response.json();
     } catch (error) {
-        console.error('API Call failed:', error);
-        throw error;
+        console.error('API Call fehlgeschlagen:', error);
+        return 'Server nicht erreichbar.';
     }
 }
 
 function handleBotResponse(response, timestamp) {
+    addMessageToChat('Bot', response, timestamp);
+}
+
+// Nachricht in die Chatbox einfügen
+function addMessageToChat(user, message, timestamp) {
     const outputDiv = document.getElementById('output');
-    
-    // Bot-Antwort zum Output hinzufügen
-    const botMessage = document.createElement('div');
-    botMessage.innerHTML = `<p><strong>Bot (${timestamp}):</strong> ${response}</p>`;
-    outputDiv.appendChild(botMessage);
-    
-    // Verlauf speichern (nicht mehr notwendig, da wir keine Bot-Antworten speichern wollen)
-//     saveToHistory({
-//         user: 'Bot',
-//         message: response,
-//         timestamp: timestamp
-//     });
-    
-    // Automatisches Scrollen
-    outputDiv.scrollTop = outputDiv.scrollHeight;
-    // historyDiv.scrollTop = historyDiv.scrollHeight; // Diese Zeile kann entfernt werden, da wir den Verlauf nicht mehr aktualisieren
+    const messageDiv = document.createElement('div');
+    messageDiv.innerHTML = `<p><strong>${user} (${timestamp}):</strong> ${message}</p>`;
+    outputDiv.appendChild(messageDiv);
+    outputDiv.scrollTop = outputDiv.scrollHeight; // Automatisches Scrollen
 }
 
 // Verlauf speichern
 function saveToHistory(messageData) {
-    let history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
+    const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
     history.push(messageData);
     localStorage.setItem('chatHistory', JSON.stringify(history));
 }
 
-// Verlauf laden
+// Verlauf laden und in Chatbox anzeigen
 function loadHistory() {
     const history = JSON.parse(localStorage.getItem('chatHistory') || '[]');
-    const outputDiv = document.getElementById('output');
     const historyDiv = document.getElementById('history');
-    
-    historyDiv.innerHTML = ''; // Vorherigen Verlauf leeren
+    historyDiv.innerHTML = ''; // Verlauf leeren
 
-    history.forEach(item => {
-        const historyMessage = document.createElement('div');
-        historyMessage.innerHTML = `<p><small>${item.timestamp} - ${item.user}: ${item.message}</small></p>`;
-        historyMessage.classList.add('history-item'); // Klasse hinzufügen für Styling
-        historyMessage.onclick = function() {
-            loadMessageToChat(item.message); // Funktion aufrufen, um die Nachricht zu laden
-        };
+    history.forEach(({ timestamp, user, message }) => {
+        const historyMessage = createHistoryMessage(timestamp, user, message);
         historyDiv.appendChild(historyMessage);
     });
 }
 
-// Funktion zum Laden einer Nachricht in die Chatbox
-function loadMessageToChat(message) {
-    const userInput = document.getElementById('userInput');
-    userInput.value = message; // Nachricht in das Eingabefeld laden
+// Funktion zum Erstellen eines Verlaufseintrags
+function createHistoryMessage(timestamp, user, message) {
+    const historyMessage = document.createElement('div');
+    historyMessage.innerHTML = `<p><small>${timestamp} - ${user}: ${message}</small></p>`;
+    historyMessage.classList.add('history-item');
+    historyMessage.onclick = () => loadMessageToChat(message, timestamp);
+    return historyMessage;
 }
 
-function clearChat() {
+// Funktion zum Laden einer Nachricht in die Chatbox
+function loadMessageToChat(message, timestamp) {
     const outputDiv = document.getElementById('output');
-    const historyDiv = document.getElementById('history');
-    
-    // Chatbox und Verlauf leeren
-    outputDiv.innerHTML = '';
-    historyDiv.innerHTML = '';
-    
-    // Verlauf im localStorage löschen
+    outputDiv.innerHTML = ''; // Chatbox leeren
+
+    const messageDiv = document.createElement('div');
+    messageDiv.innerHTML = `<p><strong>Gast (${timestamp}):</strong> ${message}</p>`;
+    outputDiv.appendChild(messageDiv);
+    outputDiv.scrollTop = outputDiv.scrollHeight; // Automatisches Scrollen
+}
+
+// Chatverlauf leeren
+function clearChat() {
+    document.getElementById('output').innerHTML = '';
+    document.getElementById('history').innerHTML = '';
     localStorage.removeItem('chatHistory');
 }
