@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const historyDiv = document.getElementById('history');
     const userInput = document.getElementById('userInput');
 
-    // Initial-Text löschen
     outputDiv.textContent = '';
     historyDiv.textContent = '';
 
@@ -16,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Verlauf laden
     loadHistory();
 });
 
@@ -55,14 +53,12 @@ async function sendMessage() {
     historyMessage.innerHTML = `<p><small>${timestamp}: ${userMessage}</small></p>`;
     historyDiv.appendChild(historyMessage);
     
-    // Nachricht speichern
     saveToHistory({
         user: localStorage.getItem('currentUser') || 'Gast',
         message: userMessage,
         timestamp: timestamp
     });
     
-    // Input-Feld leeren
     userInput.value = '';
     
     // Automatisches Scrollen
